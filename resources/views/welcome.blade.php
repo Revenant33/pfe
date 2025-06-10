@@ -3,7 +3,7 @@
 @section('content')
 <div class="bg-background py-12">
     <div class="max-w-7xl mx-auto px-4 text-center">
-        <h1 class="text-4xl font-bold text-primary mb-4">Welcome to DiscountBasket</h1>
+        <h1 class="text-4xl font-bold text-primary mb-4">Welcome to ExpiryProducts</h1>
         <p class="text-lg text-foreground mb-6">
             Save money and reduce waste by buying near-expiry food and discounted products from local sellers.
         </p>
