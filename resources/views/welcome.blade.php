@@ -11,7 +11,7 @@
         <div class="flex justify-center gap-4 mb-8">
             @auth
                 <a href="{{ route('dashboard') }}" class="bg-primary text-white px-6 py-3 rounded-md shadow hover:bg-primary-dark transition">
-                    Go to Dashboard
+                    Go to Dashboard !
                 </a>
             @else
                 <a href="{{ route('register') }}" class="bg-primary text-white px-6 py-3 rounded-md shadow hover:bg-primary-dark transition">
