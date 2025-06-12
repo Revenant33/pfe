@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Composants réutilisables */
+.btn {
+    @apply px-4 py-2 rounded font-medium transition-colors;
+}
+
+.btn-primary {
+    @apply bg-primary text-white hover:bg-primary-dark;
+}
+
+.card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden;
+}
+
+/* Animations personnalisées */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+.bg-ecommerce {
+    background: linear-gradient(135deg, #0000ff 0%, #1f2b77 100%);
+    min-height: 100vh;
+}
+.dark .bg-ecommerce {
+    background: linear-gradient(135deg, #df06bf 0%, #0758e3 100%);
+}
+.bg-custom {
+    background: linear-gradient(to right, #0080ff, #0579ff);
+    min-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
