@@ -21,7 +21,7 @@ export default {
   extend: {
     
     backgroundImage: {
-      'ecommerce': "url('xampp\htdocs\pfe-main\pfe-main\public\images\blueback.jpg')",
+      'ecommerce': "url('/images/blueback.jpg')",
     },
     colors: {
       primary: '#4CAF50',          // Vert principal

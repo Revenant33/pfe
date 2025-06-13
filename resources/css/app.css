@@ -26,9 +26,11 @@
     animation: fadeIn 0.3s ease-out;
 }
 .bg-ecommerce {
-    background: linear-gradient(135deg, #0000ff 0%, #1f2b77 100%);
-    min-height: 100vh;
+    background-image: url('/pfe-main/images/blueback.jpg');
+    @apply bg-cover bg-center;
 }
+
+
 .dark .bg-ecommerce {
     background: linear-gradient(135deg, #df06bf 0%, #0758e3 100%);
 }

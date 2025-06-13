@@ -15,17 +15,10 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-         <style>
-        .bg-ecommerce {
-            background: linear-gradient(135deg, #f9f9ff 0%, #f0f2ff 100%);
-            min-height: 100vh;
-        }
-        .dark .bg-ecommerce {
-            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
-        }
-    </style>
+         
     </head>
-        <body style="background-image: url('/images/ton-image.jpg'); background-size: cover; background-position: center;">
+       <body class="font-sans antialiased text-foreground {{ request()->is('/') ? 'bg-white' : '' }}" style="{{ !request()->is('/') ? "background-image: url('" . asset('images/blueback2.jpg') . "'); background-size: cover; background-position: center;" : '' }}">
+
 
 
 
