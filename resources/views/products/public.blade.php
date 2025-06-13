@@ -15,13 +15,14 @@
                         <p><strong>Discount:</strong> ${{ number_format($product->discount_price, 2) }}</p>
                         <p><strong>Expires:</strong> {{ \Carbon\Carbon::parse($product->expiration_date)->toFormattedDateString() }}</p>
 
-                        <form method="POST" action="{{ route('orders.store', $product) }}">
-                                 @csrf
+                        <form method="POST" action="{{ route('cart.add', $product->id) }}">
+                        @csrf
                         <div class="mb-2">
-                             <input type="number" name="quantity" value="1" min="1" class="form-control form-control-sm" required>
+                            <input type="number" name="quantity" value="1" min="1" class="form-control form-control-sm" required>
                         </div>
-                                <button type="submit" class="btn btn-success btn-sm">Order</button>
-                        </form>
+                        <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
+                    </form>
+
 
 
 
