@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
@@ -14,7 +15,30 @@ class DashboardController extends Controller
     $user = Auth::user();
 
     if ($user->role === 'admin') {
-        return view('dashboard.admin', compact('user'));
+    $totalUsers = \App\Models\User::count();
+    $totalSellers = \App\Models\User::where('role', 'seller')->count();
+    $totalBuyers = \App\Models\User::where('role', 'buyer')->count();
+    $totalAdmins = \App\Models\User::where('role', 'admin')->count();
+    $totalOrders = Order::count();
+    $totalRevenue = Order::sum('total_price');
+    $latestUsers = \App\Models\User::latest()->take(5)->get();
+    $topProducts = Product::orderByDesc('times_sold')->take(5)->with('seller')->get();
+    $expiringProducts = Product::where('expiration_date', '<=', now()->addDays(3))->get();
+    $revenueLabels = [];
+    $revenueData = [];
+
+    foreach (range(6, 0) as $daysAgo) {
+        $date = Carbon::now()->subDays($daysAgo)->format('Y-m-d');
+        $label = Carbon::now()->subDays($daysAgo)->format('M d');
+        $revenue = Order::whereDate('created_at', $date)->sum('total_price');
+
+        $revenueLabels[] = $label;
+        $revenueData[] = $revenue;
+    }
+
+    return view('dashboard.admin', compact(   'user', 'totalUsers', 'totalSellers', 'totalBuyers', 'totalAdmins'
+                                             ,'totalOrders', 'totalRevenue', 'latestUsers', 'topProducts'
+                                             ,'latestUsers','revenueLabels','revenueData','expiringProducts'));
     }
 
     if ($user->role === 'seller') {

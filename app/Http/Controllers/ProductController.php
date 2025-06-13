@@ -82,11 +82,15 @@ class ProductController extends Controller
     // Delete a product
     public function destroy(Product $product)
     {
-        if ($product->seller_id !== Auth::id()) {
+       $user = Auth::user();
+
+            if ($user->id !== $product->seller_id && $user->role !== 'admin') {
             abort(403);
-        }
+       }
 
         $product->delete();
+       $message = Auth::user()->role === 'admin' ? 'Product removed by admin.' : 'Product deleted successfully.';
+        return redirect()->back()->with('success', $message);
 
         return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
     }
