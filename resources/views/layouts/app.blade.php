@@ -15,6 +15,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+<<<<<<< HEAD
          
     </head>
        <body class="font-sans antialiased text-foreground {{ request()->is('/') ? 'bg-white' : '' }}" style="{{ !request()->is('/') ? "background-image: url('" . asset('images/blueback2.jpg') . "'); background-size: cover; background-position: center;" : '' }}">
@@ -22,6 +23,10 @@
 
 
 
+=======
+    </head>
+    <body class="font-sans antialiased bg-background text-foreground">
+>>>>>>> baf3751b6fbd3347660d4ee782ad84b269b0883c
         <div class="min-h-screen ">
             @include('layouts.navigation')
 
@@ -36,7 +41,11 @@
 
             <!-- Page Content -->
             
+<<<<<<< HEAD
                     <main >
+=======
+                    <main class="py-4">
+>>>>>>> baf3751b6fbd3347660d4ee782ad84b269b0883c
                  @yield('content')
                      </main>
             

@@ -18,8 +18,12 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/', function () {
     return view('welcome');
+<<<<<<< HEAD
 })->name('home');
 
+=======
+});
+>>>>>>> baf3751b6fbd3347660d4ee782ad84b269b0883c
 Route::get('/browse', [ProductController::class, 'publicIndex'])->name('products.public');
 Route::middleware(['auth'])->group(function () {
     Route::resource('products', ProductController::class)->except(['show']);
