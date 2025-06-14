@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<<<<<<< HEAD
 <div class="container py-6 mx-auto px-4">
     <h1 class="text-3xl font-bold mb-8 text-gray-800 dark:text-white">Discounted Products</h1>
 
@@ -101,7 +100,6 @@
     }
 </style>
 @endsection
-=======
 <div class="container py-4">
     <h1 class="mb-4">Discounted Products</h1>
 
@@ -137,4 +135,3 @@
     {{ $products->links() }}
 </div>
 @endsection
->>>>>>> baf3751b6fbd3347660d4ee782ad84b269b0883c

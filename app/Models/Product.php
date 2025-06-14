@@ -18,10 +18,7 @@ class Product extends Model
         'expiration_date',
         'seller_id',
         'times_sold',
-<<<<<<< HEAD
         'image',
-=======
->>>>>>> baf3751b6fbd3347660d4ee782ad84b269b0883c
     ];
 
     public function seller()
