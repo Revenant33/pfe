@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ContactController;
+
 
 Route::view('/about', 'about')->name('about');
 Route::get('/products/{product}/orders', [App\Http\Controllers\ProductController::class, 'orderHistory'])
@@ -71,3 +73,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/cart/remove/{item}', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 });
+
+Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
+Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');
