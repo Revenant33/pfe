@@ -32,5 +32,10 @@ public function orders()
 {
     return $this->hasMany(Order::class);
 }
+public function carts()
+{
+    return $this->hasMany(\App\Models\Cart::class);
+}
+
 
 }

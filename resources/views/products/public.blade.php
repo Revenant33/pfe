@@ -55,17 +55,18 @@
                         </div>
                     </div>
 
-                    <!-- Order Form -->
-                    <form method="POST" action="{{ route('orders.store', $product) }}" class="mt-auto">
-                        @csrf
-                        <div class="flex items-center gap-2">
-                            <input type="number" name="quantity" value="1" min="1" 
-                                   class="w-16 px-2 py-1 border rounded-md text-sm dark:bg-gray-700 dark:border-gray-600">
-                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm font-medium transition-colors flex-grow">
-                                Add to Order
-                            </button>
-                        </div>
-                    </form>
+                            <!-- Order Form -->
+            <form method="POST" action="{{ route('cart.add', $product) }}" class="mt-auto">
+                @csrf
+                <div class="flex items-center gap-2">
+                    <input type="number" name="quantity" value="1" min="1" 
+                        class="w-16 px-2 py-1 border rounded-md text-sm dark:bg-gray-700 dark:border-gray-600">
+                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm font-medium transition-colors flex-grow">
+                        Add to Cart
+                    </button>
+                </div>
+            </form>
+
                 </div>
             </div>
         @empty
@@ -99,39 +100,4 @@
         overflow: hidden;
     }
 </style>
-@endsection
-<div class="container py-4">
-    <h1 class="mb-4">Discounted Products</h1>
-
-    <div class="row">
-        @forelse ($products as $product)
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $product->name }}</h5>
-                        <p class="card-text">{{ $product->description }}</p>
-                        <p><strong>Original:</strong> ${{ number_format($product->original_price, 2) }}</p>
-                        <p><strong>Discount:</strong> ${{ number_format($product->discount_price, 2) }}</p>
-                        <p><strong>Expires:</strong> {{ \Carbon\Carbon::parse($product->expiration_date)->toFormattedDateString() }}</p>
-
-                        <form method="POST" action="{{ route('orders.store', $product) }}">
-                                 @csrf
-                        <div class="mb-2">
-                             <input type="number" name="quantity" value="1" min="1" class="form-control form-control-sm" required>
-                        </div>
-                                <button type="submit" class="btn btn-success btn-sm">Order</button>
-                        </form>
-
-
-
-                    </div>
-                </div>
-            </div>
-        @empty
-            <p>No discounted products available right now.</p>
-        @endforelse
-    </div>
-
-    {{ $products->links() }}
-</div>
 @endsection

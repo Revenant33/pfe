@@ -57,4 +57,9 @@ public function orders()
 {
     return $this->hasMany(Order::class);
 }
+public function cart()
+{
+    return $this->hasMany(\App\Models\Cart::class);
+}
+
 }
