@@ -21,7 +21,9 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
+
+
 Route::get('/browse', [ProductController::class, 'publicIndex'])->name('products.public');
 Route::middleware(['auth'])->group(function () {
     Route::resource('products', ProductController::class)->except(['show']);

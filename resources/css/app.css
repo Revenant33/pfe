@@ -1,3 +1,47 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+<<<<<<< HEAD
+
+
+/* Composants réutilisables */
+.btn {
+    @apply px-4 py-2 rounded font-medium transition-colors;
+}
+
+.btn-primary {
+    @apply bg-primary text-white hover:bg-primary-dark;
+}
+
+.card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden;
+}
+
+/* Animations personnalisées */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+.bg-ecommerce {
+    background-image: url('/pfe-main/images/blueback.jpg');
+    @apply bg-cover bg-center;
+}
+
+
+.dark .bg-ecommerce {
+    background: linear-gradient(135deg, #df06bf 0%, #0758e3 100%);
+}
+.bg-custom {
+    background: linear-gradient(to right, #0080ff, #0579ff);
+    min-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+=======
+>>>>>>> baf3751b6fbd3347660d4ee782ad84b269b0883c

@@ -19,6 +19,43 @@
     @if($products->count())
         <table class="w-full table-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded shadow">
             <thead>
+<<<<<<< HEAD
+    <tr class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-left">
+        <th class="px-4 py-2">Image</th>
+        <th class="px-4 py-2">Name</th>
+        <th class="px-4 py-2">Original Price</th>
+        <th class="px-4 py-2">Discount Price</th>
+        <th class="px-4 py-2">Expiration Date</th>
+        <th class="px-4 py-2">Actions</th>
+    </tr>
+</thead>
+<tbody>
+    @foreach($products as $product)
+        <tr class="border-t dark:border-gray-600">
+            <td class="px-4 py-2">
+                @if($product->image)
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="Product Image" class="w-12 h-12 object-cover rounded">
+                @else
+                    <span class="text-gray-400">No image</span>
+                @endif
+            </td>
+            <td class="px-4 py-2">{{ $product->name }}</td>
+            <td class="px-4 py-2">${{ number_format($product->original_price, 2) }}</td>
+            <td class="px-4 py-2 text-green-600">${{ number_format($product->discount_price, 2) }}</td>
+            <td class="px-4 py-2">{{ \Carbon\Carbon::parse($product->expiration_date)->toFormattedDateString() }}</td>
+            <td class="px-4 py-2 space-x-2">
+                <a href="{{ route('products.edit', $product) }}" class="text-blue-600 hover:underline text-sm">✏️ Edit</a>
+                <form method="POST" action="{{ route('products.destroy', $product) }}" class="inline" onsubmit="return confirm('Delete this product?')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="text-red-600 hover:underline text-sm">🗑️ Delete</button>
+                </form>
+            </td>
+        </tr>
+    @endforeach
+</tbody>
+
+=======
                 <tr class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-left">
                     <th class="px-4 py-2">Name</th>
                     <th class="px-4 py-2">Original Price</th>
@@ -45,6 +82,7 @@
                     </tr>
                 @endforeach
             </tbody>
+>>>>>>> baf3751b6fbd3347660d4ee782ad84b269b0883c
         </table>
 
         <div class="mt-4">

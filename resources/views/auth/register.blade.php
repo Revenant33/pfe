@@ -15,6 +15,16 @@
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
+<<<<<<< HEAD
+        <!-- Ville -->
+        <div class="mt-4">
+            <x-input-label for="ville" :value="__('Ville')" />
+            <x-text-input id="ville" class="block mt-1 w-full" type="text" name="ville" :value="old('ville')" required />
+            <x-input-error :messages="$errors->get('ville')" class="mt-2" />
+        </div>
+
+=======
+>>>>>>> baf3751b6fbd3347660d4ee782ad84b269b0883c
         <!-- Role Selection -->
         <div class="mt-4">
             <label for="role" class="block font-medium text-sm text-gray-700">Register as</label>

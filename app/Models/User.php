@@ -23,6 +23,10 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+<<<<<<< HEAD
+        'ville',
+=======
+>>>>>>> baf3751b6fbd3347660d4ee782ad84b269b0883c
     ];
 
     /**
@@ -51,15 +55,9 @@ class User extends Authenticatable
 {
     return $this->hasMany(Product::class, 'seller_id');
 }
-// Orders
+
 public function orders()
 {
     return $this->hasMany(Order::class);
 }
-// Cart
-public function cart()
-{
-    return $this->hasOne(Cart::class);
-}
-
 }
