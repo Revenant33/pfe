@@ -33,10 +33,20 @@
             </thead>
             <tbody>
                 @forelse ($messages as $message)
-                    <tr class="border-t">
+                    <tr class="border-t align-top">
                         <td class="px-4 py-2">{{ $message->name }}</td>
                         <td class="px-4 py-2">{{ $message->email }}</td>
-                        <td class="px-4 py-2">{{ Str::limit($message->message, 50) }}</td>
+                        <td class="px-4 py-2 max-w-xs">
+                            <div class="relative">
+                                <span class="message-preview block">
+                                    {{ Str::limit($message->message, 100) }}
+                                </span>
+                                @if(strlen($message->message) > 100)
+                                    <span class="full-message hidden">{{ $message->message }}</span>
+                                    <button type="button" class="toggle-message text-blue-600 underline text-sm mt-1">Show more</button>
+                                @endif
+                            </div>
+                        </td>
                         <td class="px-4 py-2">{{ $message->created_at->format('M d, Y H:i') }}</td>
                         <td class="px-4 py-2">
                             <form action="{{ route('admin.contact.destroy', $message) }}" method="POST"
@@ -59,3 +69,24 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('.toggle-message');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function () {
+                const preview = this.parentElement.querySelector('.message-preview');
+                const full = this.parentElement.querySelector('.full-message');
+
+                const showing = !full.classList.contains('hidden');
+
+                full.classList.toggle('hidden');
+                preview.classList.toggle('hidden');
+                this.textContent = showing ? 'Show more' : 'Show less';
+            });
+        });
+    });
+</script>
+@endpush

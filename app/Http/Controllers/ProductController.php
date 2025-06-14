@@ -106,27 +106,33 @@ class ProductController extends Controller
 
     // Delete a product
     public function destroy(Product $product)
-    {
-        if ($product->seller_id !== Auth::id()) {
-            abort(403);
-        }
+{
+    $user = Auth::user();
 
-        // Supprimer l'image associée si elle existe
-        if ($product->image && Storage::disk('public')->exists($product->image)) {
-            Storage::disk('public')->delete($product->image);
-        }
-
-        $product->delete();
-
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
+    // If the user is neither the product owner nor an admin, deny access
+    if ($user->id !== $product->seller_id && $user->role !== 'admin') {
+        abort(403, 'You are not authorized to delete this product.');
     }
+
+    // Delete image if exists
+    if ($product->image && Storage::disk('public')->exists($product->image)) {
+        Storage::disk('public')->delete($product->image);
+    }
+
+    $product->delete();
+
+    return redirect()->back()->with('success', 'Product deleted successfully.');
+}
+
 
     public function publicIndex()
-    {
-        $products = Product::whereDate('expiration_date', '>', now())
-            ->orderBy('discount_price')
-            ->paginate(12);
+{
+    $products = Product::with('seller') // Eager load seller info
+        ->whereDate('expiration_date', '>', now())
+        ->orderBy('discount_price')
+        ->paginate(12);
 
-        return view('products.public', compact('products'));
-    }
+    return view('products.public', compact('products'));
+}
+
 }

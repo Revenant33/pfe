@@ -55,17 +55,59 @@
                         </div>
                     </div>
 
-                            <!-- Order Form -->
-            <form method="POST" action="{{ route('cart.add', $product) }}" class="mt-auto">
+                            @auth
+    @if(Auth::user()->role === 'admin')
+        <div class="mt-auto flex flex-col gap-2">
+            <div x-data="{ open: false }">
+            <!-- View Seller Info    -->
+           <button 
+    @click="open = true"
+    class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm font-medium transition-colors flex-grow">
+    View Seller Info
+</button>
+
+<!-- Modal -->
+
+    <div x-show="open" class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+        <div @click.away="open = false" class="bg-white p-6 rounded shadow-lg w-80">
+            <h2 class="text-lg font-bold mb-2 text-gray-800">👤 Seller Information</h2>
+            <p><strong>Name:</strong> {{ $product->seller->name ?? 'N/A' }}</p>
+            <p><strong>Email:</strong> {{ $product->seller->email ?? 'N/A' }}</p>
+            <div class="mt-4 text-right">
+                <button @click="open = false" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-3 py-1 rounded">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- Delete Product -->
+            <form action="{{ route('products.destroy', $product->id) }}" method="POST">
                 @csrf
-                <div class="flex items-center gap-2">
-                    <input type="number" name="quantity" value="1" min="1" 
-                        class="w-16 px-2 py-1 border rounded-md text-sm dark:bg-gray-700 dark:border-gray-600">
-                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm font-medium transition-colors flex-grow">
-                        Add to Cart
-                    </button>
-                </div>
+                @method('DELETE')
+                <button type="submit" 
+                        class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm font-medium transition"
+                        onclick="return confirm('Are you sure you want to delete this product?');">
+                    Delete Product
+                </button>
             </form>
+        </div>
+            @else
+        <!-- Order Form for Buyers/Sellers -->
+        <form method="POST" action="{{ route('cart.add', $product) }}" class="mt-auto">
+            @csrf
+            <div class="flex items-center gap-2">
+                <input type="number" name="quantity" value="1" min="1" 
+                    class="w-16 px-2 py-1 border rounded-md ">
+                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm font-medium transition-colors flex-grow">
+                    Add to Cart
+                </button>
+            </div>
+        </form>
+             @endif
+            @endauth
+
 
                 </div>
             </div>
