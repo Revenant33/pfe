@@ -67,6 +67,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/users/{user}/role', [UserManagementController::class, 'updateRole'])->name('admin.users.updateRole');
     Route::post('/admin/users/{user}/toggle-admin', [UserManagementController::class, 'toggleAdmin'])->name('admin.users.toggleAdmin');
     Route::delete('/admin/users/{user}', [UserManagementController::class, 'destroy'])->name('admin.users.destroy');
+    Route::get('/admin/contact-messages', [ContactController::class, 'viewMessages'])->name('admin.contact.index');
+    Route::delete('/admin/contact-messages/{id}', [ContactController::class, 'destroy'])->name('admin.contact.destroy');
+
 });
 
 Route::middleware(['auth'])->group(function () {

@@ -106,6 +106,9 @@
         <a href="{{ route('products.public') }}" class="bg-primary text-white px-5 py-3 rounded-md shadow hover:bg-primary-dark transition">
             🛒 View All Products
         </a>
+        <a href="{{ route('admin.contact.index') }}" class="bg-primary text-white px-5 py-3 rounded-md shadow hover:bg-primary-dark transition">
+    📬 View Contact Messages
+    </a>
     </div>
 </div>
 
