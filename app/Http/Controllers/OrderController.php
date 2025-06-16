@@ -11,9 +11,18 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Auth::user()->orders()->with('product')->latest()->get();
-        return view('orders.index', compact('orders'));
+    $orders = Auth::user()
+        ->orders()
+        ->with('product')
+        ->orderByDesc('created_at')
+        ->get()
+        ->groupBy(function ($order) {
+            return $order->created_at->format('Y-m-d H:i:s'); // Group by exact timestamp
+        });
+
+    return view('orders.index', compact('orders'));
     }
+
 
     public function store(Request $request, Product $product)
     {

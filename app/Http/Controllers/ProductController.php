@@ -141,6 +141,14 @@ class ProductController extends Controller
     if ($request->filled('category')) {
         $query->where('category', $request->category);
     }
+    
+        if ($request->filled('min_price')) {
+        $query->where('discount_price', '>=', $request->min_price);
+    }
+
+    if ($request->filled('max_price')) {
+        $query->where('discount_price', '<=', $request->max_price);
+    }
 
     // Execute query with sorting and pagination
     $products = $query->orderBy('discount_price')->paginate(12);

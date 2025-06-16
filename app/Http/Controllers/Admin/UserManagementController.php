@@ -65,15 +65,28 @@ public function destroy(User $user)
 
     return back()->with('success', 'User deleted.');
 }
-    public function viewSellerProducts(User $user)
-    {
-        if ($user->role !== 'seller') {
-            abort(403);
-        }
+    
 
-        $products = Product::where('seller_id', $user->id)->latest()->paginate(10);
-        return view('admin.users.seller-products', compact('user', 'products'));
+public function viewSellerProducts(User $user, Request $request)
+{
+    if ($user->role !== 'seller') {
+        abort(403);
     }
+
+    $query = Product::where('seller_id', $user->id);
+
+    if ($request->filled('search')) {
+        $query->where(function ($q) use ($request) {
+            $q->where('name', 'like', '%' . $request->search . '%')
+              ->orWhere('category', 'like', '%' . $request->search . '%');
+        });
+    }
+
+    $products = $query->latest()->paginate(10);
+
+    return view('admin.users.seller-products', compact('user', 'products'));
+}
+
     public function viewBuyerOrders(User $user)
     {
         if ($user->role !== 'buyer') {

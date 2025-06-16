@@ -22,6 +22,7 @@ class CartController extends Controller
     {
         $request->validate([
             'quantity' => 'required|integer|min:1'
+            
         ]);
 
         $cart = Auth::user()->cart()->firstOrCreate([]);
