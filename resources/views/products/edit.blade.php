@@ -59,6 +59,21 @@
                    value="{{ old('name', $product->name) }}" required>
             @error('name') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
+        <!-- Category -->
+        <div class="mb-4">
+    <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+    <select id="category" name="category" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+        @php
+            $categories = ['Fruits & Vegetables', 'Dairy & Eggs', 'Meat & Fish', 'Bakery', 'Snacks', 'Beverages', 'Frozen', 'Canned Goods'];
+        @endphp
+        @foreach ($categories as $cat)
+            <option value="{{ $cat }}" {{ $product->category === $cat ? 'selected' : '' }}>
+                {{ $cat }}
+            </option>
+        @endforeach
+        </select>
+     </div>
+
 
         <div class="mb-3">
             <label class="block font-medium">Description</label>

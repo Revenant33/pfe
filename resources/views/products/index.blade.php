@@ -22,6 +22,7 @@
     <tr class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100 text-left">
         <th class="px-4 py-2">Image</th>
         <th class="px-4 py-2">Name</th>
+        <th class="px-4 py-2">Category</th> 
         <th class="px-4 py-2">Original Price</th>
         <th class="px-4 py-2">Discount Price</th>
         <th class="px-4 py-2">Expiration Date</th>
@@ -39,6 +40,7 @@
                 @endif
             </td>
             <td class="px-4 py-2">{{ $product->name }}</td>
+            <td class="px-4 py-2">{{ $product->category ?? 'N/A' }}</td>
             <td class="px-4 py-2">${{ number_format($product->original_price, 2) }}</td>
             <td class="px-4 py-2 text-green-600">${{ number_format($product->discount_price, 2) }}</td>
             <td class="px-4 py-2">{{ \Carbon\Carbon::parse($product->expiration_date)->toFormattedDateString() }}</td>

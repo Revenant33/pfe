@@ -3,6 +3,27 @@
 @section('content')
 <div class="container py-6 mx-auto px-4">
     <h1 class="text-3xl font-bold mb-8 text-gray-800 dark:text-white">Discounted Products</h1>
+    <form method="GET" class="mb-6 flex flex-wrap gap-4 items-center">
+    <!-- Search -->
+    <input type="text" name="search" placeholder="Search products..." 
+           value="{{ request('search') }}"
+           class="px-4 py-2 border rounded-md shadow-sm w-64">
+
+    <!-- Category Dropdown -->
+    <select name="category" class="px-4 py-2 border rounded-md shadow-sm">
+        <option value="">All Categories</option>
+        @foreach($categories as $cat)
+            <option value="{{ $cat }}" {{ request('category') == $cat ? 'selected' : '' }}>
+                {{ ucfirst($cat) }}
+            </option>
+        @endforeach
+    </select>
+
+    <button type="submit" class="bg-primary text-white px-4 py-2 rounded-md">
+        🔍 Filter
+    </button>
+    <a href="{{ route('products.public') }}" class="text-blue-600 underline ml-2">Clear</a>
+</form>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         @forelse ($products as $product)
@@ -58,29 +79,46 @@
                             @auth
     @if(Auth::user()->role === 'admin')
         <div class="mt-auto flex flex-col gap-2">
-            <div x-data="{ open: false }">
-            <!-- View Seller Info    -->
-           <button 
-    @click="open = true"
-    class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm font-medium transition-colors flex-grow">
-    View Seller Info
-</button>
+            <!-- Modal Toggle Button -->
+<div x-data="{ open: false }">
+    <button 
+        @click="open = true"
+        class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-md text-sm font-medium transition">
+        View Seller Info
+    </button>
 
-<!-- Modal -->
+    <!-- Modal -->
+    <div x-show="open" class="fixed inset-0 flex items-center justify-center z-50 bg-gray bg-opacity-50">
 
-    <div x-show="open" class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-        <div @click.away="open = false" class="bg-white p-6 rounded shadow-lg w-80">
-            <h2 class="text-lg font-bold mb-2 text-gray-800">👤 Seller Information</h2>
-            <p><strong>Name:</strong> {{ $product->seller->name ?? 'N/A' }}</p>
-            <p><strong>Email:</strong> {{ $product->seller->email ?? 'N/A' }}</p>
-            <div class="mt-4 text-right">
-                <button @click="open = false" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-3 py-1 rounded">
+
+        <div @click.away="open = false" class="bg-white p-6 rounded-lg shadow-xl w-[90%] max-w-md">
+            <h2 class="text-xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
+                👤 Seller Information
+            </h2>
+
+            <div class="space-y-2 text-sm text-gray-700">
+                <p><strong>Name:</strong> {{ $product->seller->name ?? 'N/A' }}</p>
+                <p><strong>Email:</strong> {{ $product->seller->email ?? 'N/A' }}</p>
+                <p><strong>Role:</strong> {{ $product->seller->role ?? 'N/A' }}</p>
+                <p><strong>Phone:</strong> {{ $product->seller->phone ?? 'N/A' }}</p>
+                <p><strong>City:</strong> {{ $product->seller->ville ?? 'N/A' }}</p>
+            
+            </div>
+            @if ($product->seller->role === 'seller')
+    <a href="{{ route('admin.users.products', $product->seller->id) }}"
+       class="mt-3 inline-block bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition text-sm">
+        View Seller's Products
+    </a>
+@endif
+            <div class="mt-6 text-right">
+                <button @click="open = false" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded">
                     Close
                 </button>
             </div>
         </div>
     </div>
 </div>
+
 
             <!-- Delete Product -->
             <form action="{{ route('products.destroy', $product->id) }}" method="POST">

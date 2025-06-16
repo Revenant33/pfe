@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Product;
+use App\Models\Order;
 
 class UserManagementController extends Controller
 {
@@ -63,4 +65,23 @@ public function destroy(User $user)
 
     return back()->with('success', 'User deleted.');
 }
+    public function viewSellerProducts(User $user)
+    {
+        if ($user->role !== 'seller') {
+            abort(403);
+        }
+
+        $products = Product::where('seller_id', $user->id)->latest()->paginate(10);
+        return view('admin.users.seller-products', compact('user', 'products'));
+    }
+    public function viewBuyerOrders(User $user)
+    {
+        if ($user->role !== 'buyer') {
+            abort(403);
+        }
+
+        $orders = Order::where('user_id', $user->id)->with('product')->latest()->paginate(10);
+        return view('admin.users.buyer-orders', compact('user', 'orders'));
+    }
+
 }

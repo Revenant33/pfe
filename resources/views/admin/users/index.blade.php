@@ -48,6 +48,18 @@
         <button class="btn btn-sm btn-danger">Delete</button>
     </form>
     @endif
+   @if ($user->role === 'seller')
+    <a href="{{ route('admin.users.products', $user) }}"
+       class="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded shadow transition">
+        🛍 View Products
+    </a>
+@elseif ($user->role === 'buyer')
+    <a href="{{ route('admin.users.orders', $user) }}"
+       class="inline-block bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded shadow transition">
+        🧾 View Orders
+    </a>
+@endif
+
 </td>
 
             </tr>

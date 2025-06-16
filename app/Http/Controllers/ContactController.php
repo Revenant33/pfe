@@ -30,7 +30,8 @@ class ContactController extends Controller
             'message' => $request->message,
         ]);
 
-        return redirect()->route('contact.show')->with('success', 'Your message has been sent!');
+        return back()->with('success', 'Your message has been sent!');
+
     }
 
     // View messages (admin only)

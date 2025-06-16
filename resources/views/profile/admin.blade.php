@@ -3,9 +3,7 @@
 @section('content')
 <div class="container py-4">
 
-    <h1>Admin Profile</h1>
-    <p>Welcome, Admin {{ $user->name }}!</p>
-    <p>You can manage all users and data.</p>
+    
 
     {{-- Default Profile Info Form --}}
     <div class="card mb-4">

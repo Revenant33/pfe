@@ -69,7 +69,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/users/{user}', [UserManagementController::class, 'destroy'])->name('admin.users.destroy');
     Route::get('/admin/contact-messages', [ContactController::class, 'viewMessages'])->name('admin.contact.index');
     Route::delete('/admin/contact-messages/{id}', [ContactController::class, 'destroy'])->name('admin.contact.destroy');
-
+    Route::get('/admin/users/{user}/products', [UserManagementController::class, 'viewSellerProducts'])->name('admin.users.products');
+    Route::get('/admin/users/{user}/orders', [UserManagementController::class, 'viewBuyerOrders'])->name('admin.users.orders');
 });
 
 Route::middleware(['auth'])->group(function () {

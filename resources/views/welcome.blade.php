@@ -77,41 +77,10 @@
         </div>
         </div>  
     </div>
-    <!-- Contact us Section -->
-        <div class="max-w-5xl mx-auto py-12 px-4">
-    <h2 class="text-3xl font-bold text-primary mb-6 text-center">Contact Us</h2>
-    <<div class="max-w-3xl mx-auto bg-white p-6 rounded shadow text-black">
-    <p class="text-center text-gray-600 mb-8">
-        Have a question or suggestion? We'd love to hear from you.
-    </p>
-    
-    <form method="POST" action="{{ route('contact.submit') }}" class="space-y-4 max-w-xl mx-auto">
-        @csrf
-        <div>
-            <label for="name" class="block font-semibold text-gray-700">Name</label>
-            <input type="text" id="name" name="name" required class="w-full border border-gray-300 rounded px-4 py-2">
-        </div>
-
-        <div>
-            <label for="email" class="block font-semibold text-gray-700">Email</label>
-            <input type="email" id="email" name="email" required class="w-full border border-gray-300 rounded px-4 py-2">
-        </div>
-
-        <div>
-            <label for="message" class="block font-semibold text-gray-700">Message</label>
-            <textarea id="message" name="message" rows="5" required class="w-full border border-gray-300 rounded px-4 py-2"></textarea>
-        </div>
-
-        <div class="text-center">
-            <button type="submit" class="bg-primary text-white px-6 py-2 rounded hover:bg-primary-dark transition">
-                Send Message
-            </button>
-        </div>
-    </form>
-    </div>
+    @include('components.footer')
 </div>
     </div>
-</div>
+
 @endsection
 
 

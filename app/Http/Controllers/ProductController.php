@@ -39,16 +39,17 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
             'description' => 'nullable|string',
             'original_price' => 'required|numeric|min:0',
             'discount_price' => 'required|numeric|min:0|lt:original_price',
             'expiration_date' => 'required|date|after:today',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
-
+            
         $data = $request->only([
             'name', 'description', 'original_price', 
-            'discount_price', 'expiration_date'
+            'discount_price', 'expiration_date','category'
         ]);
 
         if ($request->hasFile('image')) {
@@ -79,6 +80,7 @@ class ProductController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
             'description' => 'nullable|string',
             'original_price' => 'required|numeric|min:0',
             'discount_price' => 'required|numeric|min:0|lt:original_price',
@@ -87,8 +89,8 @@ class ProductController extends Controller
         ]);
 
         $data = $request->only([
-            'name', 'description', 'original_price',
-            'discount_price', 'expiration_date'
+            'name', 'description', 'original_price', 
+            'discount_price', 'expiration_date','category'
         ]);
 
         if ($request->hasFile('image')) {
@@ -125,14 +127,33 @@ class ProductController extends Controller
 }
 
 
-    public function publicIndex()
+  public function publicIndex(Request $request)
 {
-    $products = Product::with('seller') // Eager load seller info
-        ->whereDate('expiration_date', '>', now())
-        ->orderBy('discount_price')
-        ->paginate(12);
+    // Start with the query builder
+    $query = Product::with('seller')
+        ->whereDate('expiration_date', '>', now());
 
-    return view('products.public', compact('products'));
+    // Apply filters if present
+    if ($request->filled('search')) {
+        $query->where('name', 'like', '%' . $request->search . '%');
+    }
+
+    if ($request->filled('category')) {
+        $query->where('category', $request->category);
+    }
+
+    // Execute query with sorting and pagination
+    $products = $query->orderBy('discount_price')->paginate(12);
+
+    // Get unique categories for the filter dropdown
+   $categories = Product::select('category')
+    ->whereNotNull('category')
+    ->where('category', '!=', '')
+    ->distinct()
+    ->pluck('category');
+
+    return view('products.public', compact('products', 'categories'));
 }
+
 
 }

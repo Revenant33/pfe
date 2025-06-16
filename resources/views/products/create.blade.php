@@ -25,6 +25,31 @@
                    class="mt-1 block w-full rounded-md border-gray-300 dark:text-white focus:ring-primary focus:border-primary">
             @error('name') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
+        <!-- Product Category -->
+        <div class="mt-4">
+            <label for="category" class="block font-medium text-sm text-gray-700">Category</label>
+            <select name="category" id="category" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                <option value="">-- Select a Category --</option>
+                <option value="Bakery & Pastries">Bakery & Pastries</option>
+                <option value="Dairy Products">Dairy Products</option>
+                <option value="Meat & Poultry">Meat & Poultry</option>
+                <option value="Fish & Seafood">Fish & Seafood</option>
+                <option value="Fruits & Vegetables">Fruits & Vegetables</option>
+                <option value="Canned & Jarred Goods">Canned & Jarred Goods</option>
+                <option value="Beverages">Beverages</option>
+                <option value="Frozen Foods">Frozen Foods</option>
+                <option value="Snacks & Confectionery">Snacks & Confectionery</option>
+                <option value="Grains & Cereals">Grains & Cereals</option>
+                <option value="Condiments & Sauces">Condiments & Sauces</option>
+                <option value="Ready-to-Eat Meals">Ready-to-Eat Meals</option>
+                <option value="Organic & Bio">Organic & Bio</option>
+                <option value="Non-Food">Non-Food</option>
+            </select>
+            @error('category')
+                <span class="text-red-600 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
+
 
         <!-- Description -->
         <div>
