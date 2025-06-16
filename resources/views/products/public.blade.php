@@ -53,8 +53,8 @@
                 <!-- Product Info -->
                 <div class="p-4 flex-grow flex flex-col">
                     <div class="flex-grow">
-                        <h3 class="font-semibold text-lg text-gray-800 dark:text-white mb-1 line-clamp-1">{{ $product->name }}</h3>
-                        <p class="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-2">{{ $product->description }}</p>
+                        <h3 class="font-semibold text-lg text-gray-800 dark:text-black mb-1 line-clamp-1">{{ $product->name }}</h3>
+                        <p class="text-gray-600 dark:text-gray-600 text-sm mb-3 line-clamp-2">{{ $product->description }}</p>
                         
                         <!-- Pricing -->
                         <div class="mb-3">

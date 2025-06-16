@@ -72,6 +72,8 @@ class CartController extends Controller
                 'quantity' => $item->quantity,
                 'total_price' => $item->quantity * $product->discount_price,
             ]);
+             $product->times_sold += $item->quantity;
+        $product->save();
         }
 
         // Clear cart

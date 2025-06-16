@@ -38,8 +38,9 @@ class OrderController extends Controller
             'quantity' => $validated['quantity'],
             'total_price' => $total,
         ]);
+        
         $product->increment('times_sold', $validated['quantity']);
-
+            
         return redirect()->route('orders.index')->with('success', 'Order placed!');
     }
 }

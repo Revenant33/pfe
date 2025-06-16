@@ -25,46 +25,61 @@
         </a>
     </div>
 
-    <!-- Latest Products -->
-    <div class="mb-6">
-        <h4 class="font-bold mb-2">🧁 Your Latest Products</h4>
-        @forelse ($products as $product)
-    <div class="mb-2">
-        <strong>{{ $product->name }}</strong> - ${{ number_format($product->discount_price, 2) }}  
-        <small>(Expires: {{ \Carbon\Carbon::parse($product->expiration_date)->toFormattedDateString() }})</small><br>
-        <a href="{{ route('products.orders', $product) }}" class="text-blue-600 text-sm hover:underline">
-            🧾 View Order History
-        </a>
-    </div>
-@empty
-    <p>You haven’t added any products yet.</p>
-@endforelse
+   <!-- Latest Products -->
+<div class="mb-6">
+    <h4 class="font-bold mb-2">🧁 Your Latest Products</h4>
+    @forelse ($products->take(5) as $product)
+        <div class="mb-2 text-sm text-gray-700 dark:text-gray-300">
+            <strong>{{ $product->name }}</strong> — ${{ number_format($product->discount_price, 2) }}
+            <span class="text-xs text-gray-500">(Expires {{ \Carbon\Carbon::parse($product->expiration_date)->format('M d, Y') }})</span>
+        </div>
+    @empty
+        <p class="text-sm text-gray-600">You haven’t added any products yet.</p>
+    @endforelse
+</div>
+
     </div>
 
     <!-- Best Selling -->
-    <div class="mb-6">
-        <h4 class="font-bold mb-2">🏆 Top 5 Best-Selling Products</h4>
-        @if ($topProducts->count())
-            <ul class="list-inside list-disc text-sm space-y-1">
-                @foreach ($topProducts as $product)
-                    <li>{{ $product->name }} — Sold: {{ $product->times_sold }}</li>
-                @endforeach
-            </ul>
-        @else
-            <p class="text-sm text-gray-500">No products sold yet.</p>
-        @endif
-    </div>
-
-    <!-- Expiring Soon -->
-    @if ($expiring->count())
-        <div class="mb-6">
-            <h4 class="font-bold text-red-600 mb-2">⚠️ Products Expiring Soon</h4>
-            <ul class="list-inside list-disc text-sm text-red-600">
-                @foreach ($expiring as $product)
-                    <li>{{ $product->name }} — Expires {{ \Carbon\Carbon::parse($product->expiration_date)->toFormattedDateString() }}</li>
-                @endforeach
-            </ul>
-        </div>
+<div class="mb-6">
+    <h4 class="font-bold mb-2">🏆 Top 5 Best-Selling Products</h4>
+    @if ($topProducts->isNotEmpty())
+        <ul class="list-inside list-disc text-sm space-y-1">
+            @foreach ($topProducts as $product)
+                <li>
+                    <strong>{{ $product->name }}</strong> — Sold: {{ $product->times_sold }}
+                    <span class="text-gray-500 text-xs">(Expires {{ \Carbon\Carbon::parse($product->expiration_date)->format('M d, Y') }})</span>
+                </li>
+            @endforeach
+        </ul>
+    @else
+        <p class="text-sm text-gray-500">No best-selling products yet.</p>
     @endif
+</div>
+
+   <!-- Expiring Soon -->
+@if ($expiring->count())
+    <div class="mb-6">
+        <h4 class="font-bold text-red-600 mb-3">⚠️ Products Expiring Soon</h4>
+        <ul class="space-y-3">
+            @foreach ($expiring as $product)
+                <li class="bg-red-100 dark:bg-red-900 text-sm p-3 rounded-md">
+                    <div class="text-red-800 dark:text-red-300 font-semibold mb-1">
+                        {{ $product->name }} — Expires {{ \Carbon\Carbon::parse($product->expiration_date)->format('M d, Y') }}
+                    </div>
+                    <form action="{{ route('products.destroy', $product->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs">
+                            Delete
+                        </button>
+                    </form>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
 </div>
 @endsection

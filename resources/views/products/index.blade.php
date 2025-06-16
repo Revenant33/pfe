@@ -50,6 +50,10 @@
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="text-red-600 hover:underline text-sm">🗑️ Delete</button>
+                    <a href="{{ route('products.orders', $product) }}"
+                        class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
+                            History
+                    </a>
                 </form>
             </td>
         </tr>
