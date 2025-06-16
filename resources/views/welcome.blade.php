@@ -4,7 +4,7 @@
 <div style="background-image: url('/images/antigasp.jpg'); background-size: cover; background-position: center;" class="min-h-screen w-full">
     <div class="bg-black/60 w-full h-full">
         <div class="max-w-7xl mx-auto px-4 text-center text-white py-24">
-            <h1 class="text-5xl font-bold mb-4 drop-shadow-lg">Welcome to DiscountBasket!</h1>
+            <h1 class="text-5xl font-bold mb-4 drop-shadow-lg">Welcome to ExpiryProducts!</h1>
             <p class="text-xl mb-6 drop-shadow-lg">
                 Save money and reduce waste by buying near-expiry food and discounted products from local sellers.
             </p>

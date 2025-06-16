@@ -14,7 +14,7 @@
         <ul class="list-disc list-inside text-sm space-y-1">
             <li><strong>Total Products:</strong> {{ $products->count() }}</li>
             <li><strong>Total Orders:</strong> {{ $orders->count() }}</li>
-            <li><strong>Total Revenue:</strong> ${{ number_format($orders->sum('total_price'), 2) }}</li>
+            <li><strong>Total Revenue:</strong> {{ number_format($orders->sum('total_price'), 2) }}DH</li>
         </ul>
     </div>
 
@@ -30,7 +30,7 @@
     <h4 class="font-bold mb-2">🧁 Your Latest Products</h4>
     @forelse ($products->take(5) as $product)
         <div class="mb-2 text-sm text-gray-700 dark:text-gray-300">
-            <strong>{{ $product->name }}</strong> — ${{ number_format($product->discount_price, 2) }}
+            <strong>{{ $product->name }}</strong> — {{ number_format($product->discount_price, 2) }}DH
             <span class="text-xs text-gray-500">(Expires {{ \Carbon\Carbon::parse($product->expiration_date)->format('M d, Y') }})</span>
         </div>
     @empty

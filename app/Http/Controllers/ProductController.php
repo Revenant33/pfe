@@ -149,6 +149,12 @@ class ProductController extends Controller
     if ($request->filled('max_price')) {
         $query->where('discount_price', '<=', $request->max_price);
     }
+    if ($request->filled('ville')) {
+    $query->whereHas('seller', function ($q) use ($request) {
+        $q->where('ville', $request->ville);
+    });
+    }
+
 
     // Execute query with sorting and pagination
     $products = $query->orderBy('discount_price')->paginate(12);
@@ -159,9 +165,13 @@ class ProductController extends Controller
     ->where('category', '!=', '')
     ->distinct()
     ->pluck('category');
+    // Get unique cities (from sellers)
+    $villes = \App\Models\User::whereNotNull('ville')
+            ->where('ville', '!=', '')
+            ->distinct()
+            ->pluck('ville');
 
-    return view('products.public', compact('products', 'categories'));
+
+    return view('products.public', compact('products', 'categories', 'villes'));
 }
-
-
 }

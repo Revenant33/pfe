@@ -31,7 +31,7 @@
 
         <div class="bg-white p-6 rounded shadow">
             <h2 class="text-lg font-semibold">💰 Total Revenue</h2>
-            <p class="text-2xl mt-2">${{ number_format($totalRevenue, 2) }}</p>
+            <p class="text-2xl mt-2">{{ number_format($totalRevenue, 2) }}DH</p>
         </div>
 
         <div class="bg-white p-6 rounded shadow">

@@ -25,7 +25,7 @@
             <div class="card text-white bg-info">
                 <div class="card-body">
                     <h5 class="card-title">Total Revenue</h5>
-                    <p class="card-text">${{ number_format($revenue, 2) }}</p>
+                    <p class="card-text">{{ number_format($revenue, 2) }}DH</p>
                 </div>
             </div>
         </div>

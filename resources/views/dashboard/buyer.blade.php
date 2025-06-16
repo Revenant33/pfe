@@ -19,7 +19,7 @@
             <div class="card border-success">
                 <div class="card-body">
                     <h5 class="card-title">💸 Total Spent</h5>
-                    <p class="card-text h4">${{ number_format($totalSpent, 2) }}</p>
+                    <p class="card-text h4">{{ number_format($totalSpent, 2) }}DH</p>
                 </div>
             </div>
         </div>
@@ -33,14 +33,19 @@
         <div class="card-body">
  @forelse ($orders as $order)
         <div class="mb-3 border-bottom pb-2">
+            <img src="{{ asset('storage/' . $order->product->image) }}"
+     alt="{{ $order->product->name }}"
+     class="rounded me-3"
+     style="width: 80px; height: 80px; object-fit: cover;">
+
         <h5>{{ $order->product->name }}</h5>
         <p>
             Quantity: {{ $order->quantity }} <br>
-            Total: ${{ number_format($order->total_price, 2) }}
+            Total: {{ number_format($order->total_price, 2) }}DH
          </p>
         </div>
     @empty
-    <   p class="text-muted">You haven’t ordered anything yet.</p>
+    <p class="text-muted">You haven’t ordered anything yet.</p>
 @endforelse
 
         

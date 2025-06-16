@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-primary text-orange-500 border-b border-primary-dark">
+<nav x-data="{ open: false }" class="bg-blue-600 text-white shadow-md rounded-b-lg transition-all duration-300 ease-in-out animate-fade-in">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">

@@ -18,15 +18,22 @@
             <ul class="space-y-2">
                 @foreach ($groupedOrders as $order)
                     <li class="border-b pb-2">
+                        @if ($order->product && $order->product->image)
+                <img src="{{ asset('storage/' . $order->product->image) }}" alt="{{ $order->product->name }}" class="w-20 h-20 object-cover rounded">
+            @else
+                <div class="w-20 h-20 bg-gray-200 flex items-center justify-center text-gray-500">
+                    Pas d’image
+                </div>
+            @endif
                         <p class="font-bold">{{ $order->product->name }}</p>
                         <p class="text-sm text-gray-600">{{ $order->product->description }}</p>
                         <p>Quantity: {{ $order->quantity }}</p>
-                        <p>Subtotal: ${{ number_format($order->total_price, 2) }}</p>
+                        <p>Subtotal: {{ number_format($order->total_price, 2) }}DH</p>
                     </li>
                 @endforeach
             </ul>
             <p class="mt-2 font-semibold">
-                Total: ${{ number_format($groupedOrders->sum('total_price'), 2) }}
+                Total: {{ number_format($groupedOrders->sum('total_price'), 2) }}DH
             </p>
         </div>
     @empty

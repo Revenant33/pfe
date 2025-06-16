@@ -18,6 +18,15 @@
             </option>
         @endforeach
     </select>
+    <!-- Ville Dropdown -->
+    <select name="ville" class="px-4 py-2 border rounded-md shadow-sm">
+        <option value="">All Cities</option>
+        @foreach($villes as $ville)
+            <option value="{{ $ville }}" {{ request('ville') == $ville ? 'selected' : '' }}>
+                {{ ucfirst($ville) }}
+            </option>
+        @endforeach
+    </select>
      <input type="number" step="0.01" name="min_price" placeholder="Min Price"
         value="{{ request('min_price') }}"
         class="border px-4 py-2 rounded-md shadow-sm w-32">
@@ -25,6 +34,7 @@
     <input type="number" step="0.01" name="max_price" placeholder="Max Price"
         value="{{ request('max_price') }}"
         class="border px-4 py-2 rounded-md shadow-sm w-32">
+        
     <button type="submit" class="bg-primary text-white px-4 py-2 rounded-md">
         🔍 Filter
     </button>
