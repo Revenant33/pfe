@@ -39,7 +39,7 @@ class CartController extends Controller
             ]);
         }
 
-        return redirect()->route('cart.index')->with('success', 'Product added to cart.');
+        return back()->with('success', 'Product added to cart.');
     }
 
     // Remove product from cart

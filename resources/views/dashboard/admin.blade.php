@@ -2,103 +2,106 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto py-10 px-4">
-    <h1 class="text-4xl font-extrabold text-primary mb-6">Admin Dashboard</h1>
+    <h1 class="text-4xl font-extrabold text-primary mb-8">Admin Dashboard</h1>
 
+    {{-- Top Stats --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div class="bg-white shadow-md p-5 rounded-lg text-center">
-            <p class="text-sm text-gray-500">Total Users</p>
-            <p class="text-3xl font-bold">{{ $totalUsers }}</p>
+        @foreach ([
+            ['label' => 'Total Users', 'value' => $totalUsers],
+            ['label' => 'Sellers', 'value' => $totalSellers],
+            ['label' => 'Buyers', 'value' => $totalBuyers],
+            ['label' => 'Admins', 'value' => $totalAdmins],
+        ] as $stat)
+        <div class="bg-white shadow p-5 rounded-lg text-center">
+            <p class="text-sm text-gray-500">{{ $stat['label'] }}</p>
+            <p class="text-3xl font-bold">{{ $stat['value'] }}</p>
         </div>
-        <div class="bg-white shadow-md p-5 rounded-lg text-center">
-            <p class="text-sm text-gray-500">Sellers</p>
-            <p class="text-3xl font-bold">{{ $totalSellers }}</p>
-        </div>
-        <div class="bg-white shadow-md p-5 rounded-lg text-center">
-            <p class="text-sm text-gray-500">Buyers</p>
-            <p class="text-3xl font-bold">{{ $totalBuyers }}</p>
-        </div>
-        <div class="bg-white shadow-md p-5 rounded-lg text-center">
-            <p class="text-sm text-gray-500">Admins</p>
-            <p class="text-3xl font-bold">{{ $totalAdmins }}</p>
-        </div>
+        @endforeach
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+    {{-- Orders + Revenue | Latest Users --}}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div class="bg-white p-6 rounded shadow">
-            <h2 class="text-lg font-semibold">🧾 Total Orders</h2>
-            <p class="text-2xl mt-2">{{ $totalOrders }}</p>
+            <h2 class="text-lg font-semibold mb-2">🧾 Total Orders</h2>
+            <p class="text-3xl">{{ $totalOrders }}</p>
+
+            <h2 class="text-lg font-semibold mt-6 mb-2">💰 Total Revenue</h2>
+            <p class="text-3xl">${{ number_format($totalRevenue, 2) }}</p>
         </div>
 
         <div class="bg-white p-6 rounded shadow">
-            <h2 class="text-lg font-semibold">💰 Total Revenue</h2>
-            <p class="text-2xl mt-2">${{ number_format($totalRevenue, 2) }}</p>
-        </div>
-
-        <div class="bg-white p-6 rounded shadow">
-            <h2 class="text-lg font-semibold">👤 Latest Users</h2>
-            <ul class="mt-2">
+            <h2 class="text-lg font-semibold mb-3">👤 Latest Users</h2>
+            <ul class="space-y-2 text-sm">
                 @foreach($latestUsers as $user)
-                    <li>{{ $user->name }} – <small>{{ ucfirst($user->role) }}</small></li>
-                @endforeach
-            </ul>
-        </div>
-    </div>
-
-    <div class="bg-white p-6 rounded shadow mb-10">
-        <h2 class="text-lg font-semibold mb-3">🏆 Top-Selling Products</h2>
-        @if($topProducts->count())
-            <table class="w-full text-left">
-                <thead>
-                    <tr>
-                        <th class="pb-2">Product</th>
-                        <th class="pb-2">Seller</th>
-                        <th class="pb-2">Times Sold</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($topProducts as $product)
-                    <tr>
-                        <td>{{ $product->name }}</td>
-                        <td>{{ $product->seller->name }}</td>
-                        <td>{{ $product->times_sold }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @else
-            <p>No product sales data yet.</p>
-        @endif
-    </div>
-
-    <div class="bg-white p-6 rounded shadow mb-10">
-        <h2 class="text-lg font-semibold mb-3">⚠️ Expiring Soon (Next 3 Days)</h2>
-        @if($expiringProducts->count())
-            <ul class="list-disc ml-5">
-                @foreach($expiringProducts as $product)
-                    <li>{{ $product->name }} (Expires: {{ $product->expiration_date->format('Y-m-d') }})
-                        <form method="POST" action="{{ route('products.destroy', $product) }}" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button class="text-red-600 text-sm ml-2" onclick="return confirm('Delete this expiring product?')">Delete</button>
-                        </form>
+                    <li>
+                        <strong>{{ $user->name }}</strong> – <span class="text-gray-600">{{ ucfirst($user->role) }}</span>
                     </li>
                 @endforeach
             </ul>
-        @else
-            <p>No expiring products.</p>
-        @endif
+        </div>
     </div>
 
-    <div class="bg-white p-6 rounded shadow mb-10">
-        <h2 class="text-lg font-semibold mb-3">📈 Revenue Over Time</h2>
-        <canvas id="revenueChart" width="400" height="200"></canvas>
+    {{-- Top Products | Expiring Soon --}}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="bg-white p-6 rounded shadow">
+            <h2 class="text-lg font-semibold mb-3">🏆 Top-Selling Products</h2>
+            @if($topProducts->count())
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b">
+                            <th class="py-2 text-left">Product</th>
+                            <th class="py-2 text-left">Seller</th>
+                            <th class="py-2 text-left">Sold</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($topProducts as $product)
+                        <tr>
+                            <td class="py-1">{{ $product->name }}</td>
+                            <td class="py-1">{{ $product->seller->name ?? 'N/A' }}</td>
+                            <td class="py-1">{{ $product->times_sold }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                <p>No top-selling products yet.</p>
+            @endif
+        </div>
+
+        <div class="bg-white p-6 rounded shadow">
+            <h2 class="text-lg font-semibold mb-3">⚠️ Expiring Soon (Next 3 Days)</h2>
+            @if($expiringProducts->count())
+                <ul class="space-y-2 text-sm text-red-600">
+                    @foreach($expiringProducts as $product)
+                        <li class="flex justify-between items-center">
+                            <span>{{ $product->name }} — {{ $product->expiration_date->format('Y-m-d') }}</span>
+                            <form method="POST" action="{{ route('products.destroy', $product) }}">
+                                @csrf @method('DELETE')
+                                <button onclick="return confirm('Delete this expiring product?')" class="text-red-500 text-xs">Delete</button>
+                            </form>
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <p>No expiring products.</p>
+            @endif
+        </div>
     </div>
 
-    <div class="bg-white p-6 rounded shadow mb-10">
-        <h2 class="text-lg font-semibold mb-3">👥 User Roles Distribution</h2>
-        <canvas id="roleChart" width="300" height="300"></canvas>
+    {{-- Charts --}}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <div class="bg-white p-6 rounded shadow">
+            <h2 class="text-lg font-semibold mb-3">📈 Revenue Over Time</h2>
+            <canvas id="revenueChart" width="400" height="200"></canvas>
+        </div>
+        <div class="bg-white p-6 rounded shadow">
+            <h2 class="text-lg font-semibold mb-3">👥 User Roles Distribution</h2>
+            <canvas id="roleChart" width="300" height="300"></canvas>
+        </div>
     </div>
 
+    {{-- Actions --}}
     <div class="flex flex-wrap gap-4">
         <a href="{{ route('admin.users.index') }}" class="bg-primary text-white px-5 py-3 rounded-md shadow hover:bg-primary-dark transition">
             ⚙️ Manage Users
@@ -107,11 +110,12 @@
             🛒 View All Products
         </a>
         <a href="{{ route('admin.contact.index') }}" class="bg-primary text-white px-5 py-3 rounded-md shadow hover:bg-primary-dark transition">
-    📬 View Contact Messages
-    </a>
+            📬 View Contact Messages
+        </a>
     </div>
 </div>
 
+{{-- Charts --}}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const revenueCtx = document.getElementById('revenueChart').getContext('2d');

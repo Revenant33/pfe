@@ -3,33 +3,65 @@
 @section('content')
 <div class="container py-6 mx-auto px-4">
     <h1 class="text-3xl font-bold mb-8 text-gray-800 dark:text-white">Discounted Products</h1>
+    @if(session('success'))
+    <div class="mb-4 p-3 rounded bg-green-100 text-green-800 border border-green-300 shadow-sm">
+        {{ session('success') }}
+    </div>
+@endif
     <form method="GET" class="mb-6 flex flex-wrap gap-4 items-center">
+    <<form method="GET" class="mb-6 flex flex-wrap items-end gap-4 bg-white p-4 rounded-lg shadow-sm border">
+
     <!-- Search -->
-    <input type="text" name="search" placeholder="Search products..." 
-           value="{{ request('search') }}"
-           class="px-4 py-2 border rounded-md shadow-sm w-64">
+    <div class="flex flex-col">
+        <label for="search" class="text-sm font-medium text-gray-700 mb-1">Search</label>
+        <input type="text" id="search" name="search" placeholder="Product name..." 
+               value="{{ request('search') }}"
+               class="px-4 py-2 border rounded-md shadow-sm w-64 focus:ring focus:ring-blue-200">
+    </div>
 
-    <!-- Category Dropdown -->
-    <select name="category" class="px-4 py-2 border rounded-md shadow-sm">
-        <option value="">All Categories</option>
-        @foreach($categories as $cat)
-            <option value="{{ $cat }}" {{ request('category') == $cat ? 'selected' : '' }}>
-                {{ ucfirst($cat) }}
-            </option>
-        @endforeach
-    </select>
-     <input type="number" step="0.01" name="min_price" placeholder="Min Price"
-        value="{{ request('min_price') }}"
-        class="border px-4 py-2 rounded-md shadow-sm w-32">
+    <!-- Category -->
+    <div class="flex flex-col">
+        <label for="category" class="text-sm font-medium text-gray-700 mb-1">Category</label>
+        <select id="category" name="category" 
+                class="px-4 py-2 border rounded-md shadow-sm w-48 bg-white focus:ring focus:ring-blue-200">
+            <option value="">All Categories</option>
+            @foreach($categories as $cat)
+                <option value="{{ $cat }}" {{ request('category') == $cat ? 'selected' : '' }}>
+                    {{ ucfirst($cat) }}
+                </option>
+            @endforeach
+        </select>
+    </div>
 
-    <input type="number" step="0.01" name="max_price" placeholder="Max Price"
-        value="{{ request('max_price') }}"
-        class="border px-4 py-2 rounded-md shadow-sm w-32">
-    <button type="submit" class="bg-primary text-white px-4 py-2 rounded-md">
-        🔍 Filter
-    </button>
-    <a href="{{ route('products.public') }}" class="text-blue-600 underline ml-2">Clear</a>
+    <!-- Min Price -->
+    <div class="flex flex-col">
+        <label for="min_price" class="text-sm font-medium text-gray-700 mb-1">Min Price</label>
+        <input type="number" step="0.01" id="min_price" name="min_price" placeholder="0.00"
+               value="{{ request('min_price') }}"
+               class="px-4 py-2 border rounded-md shadow-sm w-32 focus:ring focus:ring-blue-200">
+    </div>
+
+    <!-- Max Price -->
+    <div class="flex flex-col">
+        <label for="max_price" class="text-sm font-medium text-gray-700 mb-1">Max Price</label>
+        <input type="number" step="0.01" id="max_price" name="max_price" placeholder="100.00"
+               value="{{ request('max_price') }}"
+               class="px-4 py-2 border rounded-md shadow-sm w-32 focus:ring focus:ring-blue-200">
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex gap-2 mt-6">
+        <button type="submit"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow">
+            🔍 Filter
+        </button>
+        <a href="{{ route('products.public') }}"
+           class="text-blue-600 hover:underline text-sm mt-2 block">
+            Clear Filters
+        </a>
+    </div>
 </form>
+
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         @forelse ($products as $product)
@@ -61,10 +93,10 @@
                             <div class="flex items-center justify-between">
                                 <div>
                                     <span class="text-gray-500 dark:text-gray-400 text-sm line-through mr-2">
-                                        ${{ number_format($product->original_price, 2) }}
+                                        DH {{ number_format($product->original_price, 2) }}
                                     </span>
                                     <span class="font-bold text-lg text-primary dark:text-primary-300">
-                                        ${{ number_format($product->discount_price, 2) }}
+                                        DH {{ number_format($product->discount_price, 2) }}
                                     </span>
                                 </div>
                                 <span class="text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 px-2 py-1 rounded">

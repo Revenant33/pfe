@@ -41,21 +41,37 @@
             </td>
             <td class="px-4 py-2">{{ $product->name }}</td>
             <td class="px-4 py-2">{{ $product->category ?? 'N/A' }}</td>
-            <td class="px-4 py-2">${{ number_format($product->original_price, 2) }}</td>
-            <td class="px-4 py-2 text-green-600">${{ number_format($product->discount_price, 2) }}</td>
+            <td class="px-4 py-2">DH {{ number_format($product->original_price, 2) }}</td>
+            <td class="px-4 py-2 text-green-600">DH {{ number_format($product->discount_price, 2) }}</td>
             <td class="px-4 py-2">{{ \Carbon\Carbon::parse($product->expiration_date)->toFormattedDateString() }}</td>
-            <td class="px-4 py-2 space-x-2">
-                <a href="{{ route('products.edit', $product) }}" class="text-blue-600 hover:underline text-sm">✏️ Edit</a>
-                <form method="POST" action="{{ route('products.destroy', $product) }}" class="inline" onsubmit="return confirm('Delete this product?')">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="text-red-600 hover:underline text-sm">🗑️ Delete</button>
-                    <a href="{{ route('products.orders', $product) }}"
-                        class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">
-                            History
-                    </a>
-                </form>
-            </td>
+            <td class="px-4 py-2">
+    <div class="flex flex-wrap gap-2">
+        <!-- Edit Button -->
+         
+        <a href="{{ route('products.edit', $product) }}"
+           class="bg-green-500 hover:bg-green-600  px-3 py-1 rounded text-sm shadow transition">
+            ✏️ Edit
+        </a>
+
+        <!-- Delete Button -->
+        <form method="POST" action="{{ route('products.destroy', $product) }}"
+              onsubmit="return confirm('Delete this product?')">
+            @csrf
+            @method('DELETE')
+            <button type="submit"
+                    class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm shadow transition">
+                🗑️ Delete
+            </button>
+        </form>
+
+        <!-- History Button -->
+        <a href="{{ route('products.orders', $product) }}"
+           class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm shadow transition">
+            📊 History
+        </a>
+    </div>
+</td>
+
         </tr>
     @endforeach
 </tbody>
