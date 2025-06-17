@@ -64,7 +64,7 @@
     <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
     <select id="category" name="category" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
         @php
-            $categories = ['Fruits & Vegetables', 'Dairy & Eggs', 'Meat & Fish', 'Bakery', 'Snacks', 'Beverages', 'Frozen', 'Canned Goods'];
+            $categories = ['Fruits & Vegetables', 'Dairy & Eggs', 'Meat & Fish', 'Bakery', 'Snacks', 'Beverages', 'Frozen', 'Canned Goods', 'Home made'];
         @endphp
         @foreach ($categories as $cat)
             <option value="{{ $cat }}" {{ $product->category === $cat ? 'selected' : '' }}>

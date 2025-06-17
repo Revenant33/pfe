@@ -43,6 +43,7 @@
                 <option value="Condiments & Sauces">Condiments & Sauces</option>
                 <option value="Ready-to-Eat Meals">Ready-to-Eat Meals</option>
                 <option value="Organic & Bio">Organic & Bio</option>
+                <option value="Home made">Home made</option>
                 <option value="Non-Food">Non-Food</option>
             </select>
             @error('category')
