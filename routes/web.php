@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\StripeController;
 
 
 Route::view('/about', 'about')->name('about');
@@ -82,3 +83,5 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.show');
 Route::post('/contact', [ContactController::class, 'submitForm'])->name('contact.submit');
+Route::post('/payment', [StripeController::class, 'payment'])->name('payment');
+Route::post('/payment/cash', [StripeController::class, 'paymentCash'])->name('payment.cash');
